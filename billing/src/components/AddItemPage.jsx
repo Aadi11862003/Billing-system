@@ -1,18 +1,21 @@
+// src/pages/AddItemPage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AddItem from '../components/AddItem';
 import Navbar from '../components/navbar';
+import BillReport from '../components/BillReport';
 
-const AddItemPage = ({ onAddItem }) => {
+const AddItemPage = () => {
   const navigate = useNavigate();
+  const [items, setItems] = useState([]);
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleAddItem = (item) => {
-    onAddItem(item); // Ensure this is correctly calling the parent function
+    setItems([...items, item]);
     setShowSuccess(true);
     setTimeout(() => {
-      navigate('/item-list');
-    }, 2000); // Redirect after 2 seconds
+      setShowSuccess(false);
+    }, 2000);
   };
 
   return (
@@ -31,6 +34,7 @@ const AddItemPage = ({ onAddItem }) => {
               </div>
             </div>
           )}
+          {items.length > 0 && <BillReport items={items} />}
         </div>
       </div>
     </div>
@@ -38,3 +42,4 @@ const AddItemPage = ({ onAddItem }) => {
 };
 
 export default AddItemPage;
+
